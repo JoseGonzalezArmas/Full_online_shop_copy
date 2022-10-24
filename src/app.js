@@ -3,6 +3,9 @@ const express = require('express');
 // import the path package
 const path = require('path');
 
+// import the databse functions
+const data = require('./data/database');
+
 // import the routes
 const baseRoutes = require('./routes/base_routes');
 
@@ -22,4 +25,9 @@ app.use(express.static('public'));
 app.use(baseRoutes);
 
 //listen on port 3000
-app.listen(3000);
+
+data.connectToDataBase().then(() => {
+    // if the promise is resolved, the listen on port 3000
+    app.listen(3000);
+}).catch((error) => {console.log(error.prototype.message)});
+
